@@ -43,7 +43,10 @@ allprojects {
     }
 
     test(){
-        useTestNG()
+        useTestNG(){
+            parallel 'instances'
+            threadCount 2
+        }
     }
 
     allure{
