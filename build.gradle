@@ -1,0 +1,74 @@
+group 'area'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "ru.d10xa:gradle-allure-plugin:0.5.5"
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'ru.d10xa.allure'
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    repositories {
+        mavenCentral()
+    }
+
+    configurations {
+        compile
+    }
+
+    dependencies {
+//        agent "org.aspectj:aspectjweaver:1.8.10"
+//        compile group: 'org.testng', name: 'testng', version: '6.11'
+        compile group: 'ru.yandex.qatools.allure', name:'allure-cucumber-jvm-adaptor', version:'1.6.4'
+        compile group: 'info.cukes', name: 'cucumber-java8', version: '1.2.5'
+        compile group: 'info.cukes', name: 'cucumber-testng', version: '1.2.5'
+        compile group: 'com.github.kirlionik', name: 'allure-cucumber-plugin', version: '1.0.2'
+        compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
+    //    compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '1.6.1'
+    }
+
+    test(){
+        useTestNG()
+    }
+
+    allure{
+        aspectjweaver = true
+        testNG = false
+        allureResultsDir = "$buildDir/allure-results"
+        allureReportDir = "$buildDir/allure-report"
+    }
+
+    task hello << { task -> println "I'm $task.project.name" }
+
+    task generateAllureReport(type: Exec) {
+        commandLine "allure", "generate $buildDir/allure-results -o $buildDir/allure-report"
+    }
+
+//    task openAllureReport(type: Exec) {
+//        commandLine "allure", "report open"
+//    }
+
+    defaultTasks 'clean', 'test'
+}
+
+project(':ApiTest'){
+
+    test.finalizedBy(generateAllureReport)
+}
+
+
