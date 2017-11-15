@@ -1,4 +1,4 @@
-Feature: Prototype test
+Feature: Prototype2 test
 
   Scenario: First test
     Given Do get to 'packages'
