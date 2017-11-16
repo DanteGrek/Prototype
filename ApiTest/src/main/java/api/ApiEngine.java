@@ -4,7 +4,6 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import ru.yandex.qatools.allure.annotations.Attachment;
 
 import static io.restassured.RestAssured.given;
 
@@ -30,12 +29,12 @@ public class ApiEngine {
         requestSpecification.set(null);
     }
 
-    @Attachment
-    public String doGet(String endpoint){
-        return given(getRequestSpecification()).get(endpoint).asString();
+//    @Attachment
+    public Response doGet(String endpoint){
+        return given(getRequestSpecification()).get(endpoint);
     }
 
-    @Attachment
+//    @Attachment
     public Response doPost(String endpoint, Object body){
         return given(getRequestSpecification()).post(endpoint, body);
     }

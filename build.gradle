@@ -31,24 +31,6 @@ allprojects {
         compile
     }
 
-    dependencies {
-//        agent "org.aspectj:aspectjweaver:1.8.10"
-//        compile group: 'org.testng', name: 'testng', version: '6.11'
-        compile group: 'ru.yandex.qatools.allure', name:'allure-cucumber-jvm-adaptor', version:'1.6.4'
-        compile group: 'info.cukes', name: 'cucumber-java8', version: '1.2.5'
-        compile group: 'info.cukes', name: 'cucumber-testng', version: '1.2.5'
-        compile group: 'com.github.kirlionik', name: 'allure-cucumber-plugin', version: '1.0.2'
-        compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
-    //    compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '1.6.1'
-    }
-
-    test(){
-        useTestNG(){
-            parallel 'instances'
-            threadCount 2
-        }
-    }
-
     allure{
         aspectjweaver = true
         testNG = false
@@ -71,7 +53,48 @@ allprojects {
 
 project(':ApiTest'){
 
+    dependencies {
+        testCompile group: 'org.testng', name: 'testng', version: '6.11'
+        compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
+        compile group: 'ru.yandex.qatools.allure', name: 'allure-testng-adaptor', version: '1.5.2'
+    }
+
+    test(){
+        useTestNG(){
+            ignoreFailures = true
+        }
+    }
+
+    task smokeTest(type: Test){
+        useTestNG() {
+            ignoreFailures = true
+            includeGroups "Smoke"
+        }
+
+    }
+
+    smokeTest.finalizedBy(generateAllureReport)
     test.finalizedBy(generateAllureReport)
 }
 
+project(':UiTest'){
+
+    dependencies {
+      //  compile project(':ApiTest')
+        compile group: 'ru.yandex.qatools.allure', name:'allure-cucumber-jvm-adaptor', version:'1.6.4'
+        compile group: 'info.cukes', name: 'cucumber-java8', version: '1.2.5'
+        compile group: 'info.cukes', name: 'cucumber-testng', version: '1.2.5'
+        compile group: 'com.github.kirlionik', name: 'allure-cucumber-plugin', version: '1.0.2'
+    }
+
+    test(){
+        useTestNG(){
+            ignoreFailures = true
+            parallel 'instances'
+            threadCount 2
+        }
+    }
+
+    test.finalizedBy(generateAllureReport)
+}
 

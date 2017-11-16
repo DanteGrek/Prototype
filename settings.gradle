@@ -1,3 +1,4 @@
 rootProject.name = 'Prototype '
 include 'ApiTest'
+include 'UiTest'
 
