@@ -1,7 +1,7 @@
 Feature: Prototype test
 
   Scenario: First test
-    Given Do get to 'packages'
+    Given Launch https://www.archlinux.org
 
   Scenario: Second test
-    Given Do get 'packages'
+    Given Go to https://mail.google.com/

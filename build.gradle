@@ -40,14 +40,6 @@ allprojects {
 
     task hello << { task -> println "I'm $task.project.name" }
 
-    task generateAllureReport(type: Exec) {
-        commandLine "allure", "generate $buildDir/allure-results -o $buildDir/allure-report"
-    }
-
-//    task openAllureReport(type: Exec) {
-//        commandLine "allure", "report open"
-//    }
-
     defaultTasks 'clean', 'test'
 }
 
@@ -73,28 +65,31 @@ project(':ApiTest'){
 
     }
 
-    smokeTest.finalizedBy(generateAllureReport)
-    test.finalizedBy(generateAllureReport)
+    smokeTest.finalizedBy(allureReport)
+    test.finalizedBy(allureReport)
 }
 
 project(':UiTest'){
 
     dependencies {
-      //  compile project(':ApiTest')
+        compile group: 'org.testcontainers', name: 'selenium', version: '1.4.3'
+        compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '1.7.2'
+        compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.7.1'
         compile group: 'ru.yandex.qatools.allure', name:'allure-cucumber-jvm-adaptor', version:'1.6.4'
         compile group: 'info.cukes', name: 'cucumber-java8', version: '1.2.5'
         compile group: 'info.cukes', name: 'cucumber-testng', version: '1.2.5'
         compile group: 'com.github.kirlionik', name: 'allure-cucumber-plugin', version: '1.0.2'
+        compile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.+'
     }
 
     test(){
         useTestNG(){
             ignoreFailures = true
-            parallel 'instances'
-            threadCount 2
+//            parallel 'instances'
+//            threadCount 2
         }
     }
 
-    test.finalizedBy(generateAllureReport)
+    test.finalizedBy(allureReport)
 }
 

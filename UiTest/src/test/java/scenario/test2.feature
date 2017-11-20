@@ -1,7 +1,11 @@
 Feature: Prototype2 test
 
+  Background:
+    Given Background
+
+
   Scenario: First test
-    Given Do get to 'packages'
+    Given Start http://www.google.com.ua
 
   Scenario: Second test
-    Given Do get 'packages'
+    Given Open http://youtube.com

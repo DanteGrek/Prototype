@@ -1,23 +1,22 @@
 package steps;
 
-import cucumber.api.Transpose;
 import cucumber.api.java.en.Given;
-
-import java.util.List;
+import driverFactory.DriverFactory;
+import org.testng.Assert;
 
 /**
  * Created by osolomin on 15.11.17.
  */
 public class DefaultStepDef {
 
-
-    @Given("^(?:Do get to|Do get) '(.*)'")
-    public void stepDoGet(String endpoint){
-
+    @Given("^(?:Open|Start|Launch|Go to) (.*)")
+    public void stepDoGet(String site){
+        DriverFactory.getInstance().get(site);
+        Assert.assertTrue(false);
     }
 
-    @Given("^Do post to '(.*)' with body$")
-    public void stepDoPost(String endpoint, @Transpose List<String> json){
-
+    @Given("^Background$")
+    public void background(/*String endpoint, @Transpose List<String> json*/){
+        System.out.println("Background !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 }
