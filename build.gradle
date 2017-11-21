@@ -79,14 +79,14 @@ project(':UiTest'){
         compile group: 'info.cukes', name: 'cucumber-java8', version: '1.2.5'
         compile group: 'info.cukes', name: 'cucumber-testng', version: '1.2.5'
         compile group: 'com.github.kirlionik', name: 'allure-cucumber-plugin', version: '1.0.2'
-        compile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.+'
+   //     compile group: 'com.automation-remarks', name: 'video-recorder-testng', version: '1.+'
     }
 
     test(){
         useTestNG(){
             ignoreFailures = true
-//            parallel 'instances'
-//            threadCount 2
+            parallel 'instances'
+            threadCount 2
         }
     }
 
