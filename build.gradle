@@ -90,7 +90,9 @@ project(':UiTest'){
             parallel 'instances'
             threadCount 2
         }
-        systemProperty "screen",System.getProperty("screen")
+        if(System.getProperty("screen") != null){
+            systemProperty "screen",System.getProperty("screen")
+        }
     }
 
 
