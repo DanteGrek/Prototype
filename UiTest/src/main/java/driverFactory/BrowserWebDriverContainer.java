@@ -100,6 +100,8 @@ public class BrowserWebDriverContainer<SELF extends BrowserWebDriverContainer<SE
         }
 
         addExposedPorts(SELENIUM_PORT, VNC_PORT);
+        addEnv("SCREEN_WIDTH", "1920");
+        addEnv("SCREEN_HEIGHT", "1080");
         addEnv("TZ", timeZone);
         addEnv("no_proxy", "localhost");
         setCommand("/opt/bin/entry_point.sh");

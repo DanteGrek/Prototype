@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -22,7 +21,7 @@ public class DriverFactory {
 
     public static void setupChromeContainer(){
         container.set(new BrowserWebDriverContainer().withDesiredCapabilities(DesiredCapabilities.chrome())
-                .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, new File("/build/")));
+                /*.withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, new File("/build/"))*/);
     }
 
     public static void startLocalChrome(){
@@ -31,6 +30,7 @@ public class DriverFactory {
     }
 
     public static void startRemoteChrome(){
+        container.get().getContainerInfo();
         container.get().start();
         driver.set(container.get().getWebDriver());
     }
