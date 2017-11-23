@@ -44,6 +44,8 @@ public class BrowserWebDriverContainer<SELF extends BrowserWebDriverContainer<SE
     private static final String DEFAULT_PASSWORD = "secret";
     private static final int SELENIUM_PORT = 4444;
     private static final int VNC_PORT = 5900;
+    private String screenWidth = "1920";
+    private String screenHeight = "1080";
 
     @Nullable
     private DesiredCapabilities desiredCapabilities;
@@ -98,10 +100,16 @@ public class BrowserWebDriverContainer<SELF extends BrowserWebDriverContainer<SE
         if (timeZone == null || timeZone.isEmpty()) {
             timeZone = "Etc/UTC";
         }
+        String screenSize = System.getProperty("screen");
 
+        if(screenSize != null){
+                String[] ss = screenSize.split("x");
+                screenWidth = ss[0];
+                screenHeight = ss[1];
+        }
         addExposedPorts(SELENIUM_PORT, VNC_PORT);
-        addEnv("SCREEN_WIDTH", "1920");
-        addEnv("SCREEN_HEIGHT", "1080");
+        addEnv("SCREEN_WIDTH", screenWidth);
+        addEnv("SCREEN_HEIGHT", screenHeight);
         addEnv("TZ", timeZone);
         addEnv("no_proxy", "localhost");
         setCommand("/opt/bin/entry_point.sh");

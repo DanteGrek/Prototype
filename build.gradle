@@ -41,6 +41,8 @@ allprojects {
 
     task hello << { task -> println "I'm $task.project.name" }
 
+    test.finalizedBy(allureReport)
+
     defaultTasks 'clean', 'test'
 }
 
@@ -67,7 +69,6 @@ project(':ApiTest'){
     }
 
     smokeTest.finalizedBy(allureReport)
-    test.finalizedBy(allureReport)
 }
 
 project(':UiTest'){
@@ -89,8 +90,9 @@ project(':UiTest'){
             parallel 'instances'
             threadCount 2
         }
+        systemProperty "screen",System.getProperty("screen")
     }
 
-    test.finalizedBy(allureReport)
+
 }
 
