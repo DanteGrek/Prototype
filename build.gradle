@@ -35,8 +35,8 @@ allprojects {
     allure{
         aspectjweaver = true
         testNG = false
-        allureResultsDir = "$buildDir/allure-results"
-        allureReportDir = "$buildDir/allure-report"
+        allureResultsDir = "$buildDir${File.separator}allure-results"
+        allureReportDir = "$buildDir${File.separator}allure-report"
     }
 
     task hello << { task -> println "I'm $task.project.name" }
